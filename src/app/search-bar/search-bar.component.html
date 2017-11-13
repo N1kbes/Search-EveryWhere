@@ -1,0 +1,21 @@
+<h1>{{header}}</h1>
+<form [formGroup]="searchForm" (ngSubmit)="openSearch()" class="form-inline">
+	<div class="form-group">
+		<input id="text" class="form-control" type="text" placeholder="Введите текст для поиска" formControlName="text" required/>
+		<select formControlName="system" class="form-control">
+      <option  *ngFor="let system of systems" [ngValue]="system.value">
+        {{system.name}}
+      </option>
+
+    </select>
+		<button type="submit" [disabled]="!searchForm.valid" class="btn btn-default">Искать</button>
+		<div class="warnings">
+			<p class="bg-warning" *ngIf=" text.invalid && (text.dirty || text.touched) && text.errors.required">
+				Поле поиска должно быть заполнено
+			</p>
+			<p class="bg-warning" *ngIf="system.touched && system.errors && system.errors.forbiddenName">
+				Выберите поисковую систему
+			</p>
+		</div>
+	</div>
+</form>
